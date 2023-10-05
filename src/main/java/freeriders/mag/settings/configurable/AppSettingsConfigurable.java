@@ -5,6 +5,8 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.util.NlsContexts;
 import freeriders.mag.settings.component.AppSettingsComponent;
 import freeriders.mag.settings.state.AppSettingsState;
+import freeriders.mag.settings.state.PresetConverter;
+import freeriders.mag.settings.state.models.FileNode;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -40,9 +42,11 @@ public class AppSettingsConfigurable implements Configurable {
     @Override
     public void apply() {
         AppSettingsState settings = AppSettingsState.getInstance();
-        settings.presets.stream().filter(preset -> preset.get("name").getAsString().equals(mySettingsComponent.getList().getSelectedValue())).forEach(preset -> {
-            preset.addProperty("content", mySettingsComponent.getTextArea().getText());
+        settings.presets.stream().filter(preset -> preset.getName().equals(mySettingsComponent.getList().getSelectedValue())).forEach(preset -> {
+            //replace the children of the selected preset with the content of the text area
+            preset.setContent(FileNode.fromJson(mySettingsComponent.getTextArea().getText()));
         });
+        System.out.println(new PresetConverter().toString(settings.presets));
     }
 
     @Override

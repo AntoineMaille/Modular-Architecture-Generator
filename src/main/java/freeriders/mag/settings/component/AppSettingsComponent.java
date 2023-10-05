@@ -1,16 +1,27 @@
 package freeriders.mag.settings.component;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.JBUI;
+import freeriders.mag.settings.component.components.MyButton;
+import freeriders.mag.settings.component.components.MyGridConstraint;
+import freeriders.mag.settings.component.components.MyScrollPane;
 import freeriders.mag.settings.state.AppSettingsState;
+import freeriders.mag.settings.state.models.FileNode;
+import freeriders.mag.settings.state.models.Preset;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Supports creating and managing a {@link JPanel} for the Settings Dialog.
@@ -22,35 +33,29 @@ public class AppSettingsComponent {
 
     // The text area for the component.
     private final JBTextArea myTextArea = new JBTextArea();
-    // The scrollableList for the component.
-    private final JBList<String> list = new JBList<>();
-    private final JBScrollPane scrollableList = new JBScrollPane(list);
+
+    private final MyScrollPane scrollableList = new MyScrollPane(myTextArea);
+
+
+    // The upload button for the component.
+    JButton uploadButton = new JButton("Upload Folder Structure");
 
     // The table for the component.
     private final JBTable table = new JBTable();
+
+    // Create buttons for adding and deleting presets
+    private final MyButton addButton = new MyButton("+");
+    private final MyButton deleteButton = new MyButton("-");
+
 
     // The state of the component.
     private final AppSettingsState appSettingsState;
 
     public AppSettingsComponent() {
         this.appSettingsState = AppSettingsState.getInstance();
-        this.initUI();
         this.initState();
-        this.setListeners();
-    }
-    /**
-     * Initializes the state of the component.
-     */
-    private void initState(){
-        // Populate the list with preset names
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        java.util.List<JsonObject> presets = appSettingsState.getPresets();
-        for (JsonObject preset : presets) {
-            // Assuming your presets have a specific structure, e.g., a "name" field
-            String name = preset.get("name").getAsString();
-            listModel.addElement(name);
-        }
-        list.setModel(listModel);
+        this.initUI();
+        this.setupFileUpload();
     }
 
     /**
@@ -64,8 +69,29 @@ public class AppSettingsComponent {
         myTextArea.setWrapStyleWord(true);
         myTextArea.setLineWrap(true);
 
-        GridBagConstraints constraints = this.createConstraints();
-        // Add the scrollable list to the left column.
+
+        GridBagConstraints constraints = new MyGridConstraint();
+
+        // Create a panel to hold the buttons
+        JPanel buttonPanel = new JPanel();
+
+        // LEFT COLUMN
+        constraints.weighty = 0;
+        constraints.weightx = 0.2;
+        // Add the "Add" and "Delete" buttons to the panel
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        buttonPanel.add(addButton);
+        buttonPanel.add(deleteButton);
+        // change constraint to align the button panel on left
+        constraints.anchor = GridBagConstraints.NORTHWEST;
+        panel.add(buttonPanel, constraints);
+
+        //reset constraint
+        constraints.anchor = GridBagConstraints.CENTER;
+
+        // SCROLLABLE LIST
+        constraints.weighty = 1.0;
+        constraints.gridy++;
         panel.add(scrollableList, constraints);
 
         // Increment the gridx value for the right column.
@@ -76,31 +102,29 @@ public class AppSettingsComponent {
 
         // Add the text area to the right column.
         panel.add(myTextArea, constraints);
+        panel.add(uploadButton);
 
         this.myMainPanel = panel;
     }
 
-    private GridBagConstraints createConstraints(){
-        // Create GridBagConstraints for layout.
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.2; // Adjust the weight for the left column (narrower).
-        constraints.weighty = 1.0;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        constraints.insets = JBUI.insets(5);
-        return constraints;
+    private void initState(){
+        this.scrollableList.setPresets(appSettingsState.getPresets());
     }
 
 
-    /**
-     * Sets the listeners for the List component.
-     */
-    private void setListeners(){
-        list.addListSelectionListener(new PresetSelectionListener(appSettingsState.getPresets(), list, myTextArea));
+
+    private void setupFileUpload(){
+        uploadButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.showOpenDialog(null);
+            File file = fileChooser.getSelectedFile();
+            appSettingsState.presets.add(new Preset("preset" + appSettingsState.presets.size(), FileNode.fromFile(file)));
+        });
     }
+
+
+
 
     public JPanel getPanel() {
         return myMainPanel;
@@ -111,7 +135,7 @@ public class AppSettingsComponent {
     }
 
     public JBList<String> getList() {
-        return list;
+        return scrollableList.getList();
     }
 
     public JBScrollPane getScrollableList() {

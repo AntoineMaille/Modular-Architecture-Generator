@@ -1,19 +1,19 @@
 package freeriders.mag.settings.state;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.OptionTag;
+import freeriders.mag.settings.state.models.FileNode;
+import freeriders.mag.settings.state.models.NodeType;
+import freeriders.mag.settings.state.models.Preset;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @State(
         name = "freeriders.mag.settings.state.AppSettingsState",
@@ -21,10 +21,10 @@ import java.util.List;
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
-    @OptionTag(converter = JsonConverter.class)
-    public List<JsonObject> presets = new ArrayList<>(Collections.singleton(JsonParser.parseString("{\"name\":\"default\",\"content\":\"{\"myFeature\":{}\"}").getAsJsonObject()));
+    @OptionTag(converter = PresetConverter.class)
+    public List<Preset> presets;
 
-    public List<JsonObject> getPresets() {
+    public List<Preset> getPresets() {
         return presets;
     }
 
