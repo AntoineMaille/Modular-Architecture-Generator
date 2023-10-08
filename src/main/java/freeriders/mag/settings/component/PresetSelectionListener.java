@@ -1,7 +1,5 @@
 package freeriders.mag.settings.component;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextArea;
 import freeriders.mag.settings.state.models.Preset;

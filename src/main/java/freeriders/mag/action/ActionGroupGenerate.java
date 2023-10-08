@@ -4,8 +4,12 @@ package freeriders.mag.action;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.psi.PsiElement;
+import freeriders.mag.settings.state.AppSettingsState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -32,6 +36,12 @@ class ActionGroupGenerate extends ActionGroup {
 
     @Override
     public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
-        return new AnAction[] {(new ActionGenerate("Flutter Clean Architecture", "Flutter Clean Architecture", AllIcons.Actions.NewFolder))};
+        AppSettingsState settings = AppSettingsState.getInstance();
+        List<AnAction> actions = new ArrayList<>();
+        settings.getPresets().forEach(preset -> {
+            actions.add(new ActionGenerate(preset.getName(), preset.getName(), AllIcons.Actions.NewFolder, preset.getName()));
+        });
+        //transfoorm list into array
+        return actions.toArray(AnAction[]::new);
     }
 }

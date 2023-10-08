@@ -1,6 +1,5 @@
 package freeriders.mag.settings.configurable;
 
-import com.google.gson.JsonParser;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.util.NlsContexts;
 import freeriders.mag.settings.component.AppSettingsComponent;
@@ -10,7 +9,6 @@ import freeriders.mag.settings.state.models.FileNode;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collections;
 
 public class AppSettingsConfigurable implements Configurable {
 

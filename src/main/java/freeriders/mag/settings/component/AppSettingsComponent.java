@@ -1,14 +1,9 @@
 package freeriders.mag.settings.component;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.table.JBTable;
-import com.intellij.util.ui.JBUI;
 import freeriders.mag.settings.component.components.MyButton;
 import freeriders.mag.settings.component.components.MyGridConstraint;
 import freeriders.mag.settings.component.components.MyScrollPane;
@@ -19,8 +14,6 @@ import freeriders.mag.settings.state.models.Preset;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
