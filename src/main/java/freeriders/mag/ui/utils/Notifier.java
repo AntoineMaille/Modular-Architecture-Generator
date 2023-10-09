@@ -1,4 +1,4 @@
-package freeriders.mag.ui;
+package freeriders.mag.ui.utils;
 
 import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;

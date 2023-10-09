@@ -1,8 +1,8 @@
-package freeriders.mag.settings.component;
+package freeriders.mag.settings.ide.component;
 
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextArea;
-import freeriders.mag.settings.state.models.Preset;
+import freeriders.mag.settings.ide.state.models.Preset;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -32,9 +32,10 @@ public class PresetSelectionListener implements ListSelectionListener {
                 if (preset.getName().equals(selectedPresetName)) {
                     // Set the text area to the preset content
                     myTextArea.setText(preset.getContent().toJson(true));
-                    break;
+                    return;
                 }
             }
+            myTextArea.setText("");
         }
     }
 }

@@ -1,19 +1,21 @@
-package freeriders.mag.settings.configurable;
+package freeriders.mag.settings.ide.configurable;
 
 import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
-import freeriders.mag.settings.component.AppSettingsComponent;
-import freeriders.mag.settings.state.AppSettingsState;
-import freeriders.mag.settings.state.PresetConverter;
-import freeriders.mag.settings.state.models.FileNode;
+import freeriders.mag.settings.ide.component.AppSettingsComponent;
+import freeriders.mag.settings.ide.state.AppPresetsState;
+import freeriders.mag.settings.ide.state.PresetConverter;
+import freeriders.mag.settings.ide.state.models.FileNode;
+import freeriders.mag.settings.ide.state.models.Preset;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Optional;
 
 public class AppSettingsConfigurable implements Configurable {
 
     private AppSettingsComponent mySettingsComponent;
-
 
     @Override
     public @NlsContexts.ConfigurableName String getDisplayName() {
@@ -33,24 +35,23 @@ public class AppSettingsConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        AppSettingsState settings = AppSettingsState.getInstance();
-        return true;
+        Optional<Preset> preset = mySettingsComponent.getSelectedPreset();
+        return preset.filter(value -> !value.getContent().equals(FileNode.fromJson(mySettingsComponent.getTextArea().getText()))).isPresent();
     }
 
     @Override
     public void apply() {
-        AppSettingsState settings = AppSettingsState.getInstance();
-        settings.presets.stream().filter(preset -> preset.getName().equals(mySettingsComponent.getList().getSelectedValue())).forEach(preset -> {
+        AppPresetsState settings = AppPresetsState.getInstance();
+        settings.idePresets.stream().filter(preset -> preset.getName().equals(mySettingsComponent.getList().getSelectedValue())).forEach(preset -> {
             //replace the children of the selected preset with the content of the text area
             preset.setContent(FileNode.fromJson(mySettingsComponent.getTextArea().getText()));
         });
-        System.out.println(new PresetConverter().toString(settings.presets));
     }
 
     @Override
     public void reset() {
-        AppSettingsState settings = AppSettingsState.getInstance();
-        mySettingsComponent.getTextArea().setText(settings.presets.get(0).toString());
+        AppPresetsState settings = AppPresetsState.getInstance();
+        if(!settings.idePresets.isEmpty()) mySettingsComponent.getTextArea().setText(settings.idePresets.get(0).toString());
     }
 
     @Override

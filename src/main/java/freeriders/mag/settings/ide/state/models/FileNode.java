@@ -1,4 +1,4 @@
-package freeriders.mag.settings.state.models;
+package freeriders.mag.settings.ide.state.models;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -60,6 +60,7 @@ public class FileNode {
         } else {
             // get the content of the file
             String content = "";
+            if (file.length() >= 5000) return  new FileNode(file.getName(), NodeType.FILE, null, null);
             try {
                 content = new String(Objects.requireNonNull(Files.readAllBytes(file.toPath())));
             } catch (Exception e) {

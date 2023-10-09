@@ -1,4 +1,4 @@
-package freeriders.mag.settings.state.models;
+package freeriders.mag.settings.ide.state.models;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -51,5 +51,16 @@ public class Preset {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Preset>>() {}.getType();
         return gson.fromJson(json, listType);
+    }
+
+    /**
+     * Creates a FileNode from a file
+     * @param presets the presets to create the json
+     * @return The json
+     */
+    public static String toListJson(List<Preset> presets) {
+        Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
+        Type listType = new TypeToken<List<Preset>>() {}.getType();
+        return gson.toJson(presets, listType);
     }
 }

@@ -1,4 +1,4 @@
-package freeriders.mag.settings.component.components;
+package freeriders.mag.settings.ide.component.components;
 
 import com.intellij.util.ui.JBUI;
 

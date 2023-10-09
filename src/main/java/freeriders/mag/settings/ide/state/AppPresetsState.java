@@ -1,4 +1,4 @@
-package freeriders.mag.settings.state;
+package freeriders.mag.settings.ide.state;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -6,35 +6,36 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.OptionTag;
-import freeriders.mag.settings.state.models.Preset;
+import freeriders.mag.settings.ide.state.models.Preset;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @State(
-        name = "freeriders.mag.settings.state.AppSettingsState",
+        name = "freeriders.mag.settings.ide.state.AppSettingsState",
         storages = @Storage("SettingsPlugin.xml")
 )
-public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
+public class AppPresetsState implements PersistentStateComponent<AppPresetsState> {
 
     @OptionTag(converter = PresetConverter.class)
-    public List<Preset> presets;
+    public List<Preset> idePresets = new ArrayList<>();
 
-    public List<Preset> getPresets() {
-        return presets;
+    public List<Preset> getIdePresets() {
+        return idePresets;
     }
 
-    public static AppSettingsState getInstance() {
-        return ApplicationManager.getApplication().getService(AppSettingsState.class);
+    public static AppPresetsState getInstance() {
+        return ApplicationManager.getApplication().getService(AppPresetsState.class);
     }
     @Override
-    public @Nullable AppSettingsState getState() {
+    public @Nullable AppPresetsState getState() {
         return this;
     }
 
     @Override
-    public void loadState(@NotNull AppSettingsState state) {
+    public void loadState(@NotNull AppPresetsState state) {
         XmlSerializerUtil.copyBean(state, this);
     }
 }

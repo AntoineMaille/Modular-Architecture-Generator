@@ -1,10 +1,10 @@
-package freeriders.mag.settings.component.components;
+package freeriders.mag.settings.ide.component.components;
 
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextArea;
-import freeriders.mag.settings.component.PresetSelectionListener;
-import freeriders.mag.settings.state.models.Preset;
+import freeriders.mag.settings.ide.component.PresetSelectionListener;
+import freeriders.mag.settings.ide.state.models.Preset;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class MyScrollPane extends JBScrollPane {
     }
 
     public void setPresets(List<Preset> presets){
+        if(presets == null) return;
         this.presets.clear();
         this.presets.addAll(presets);
         this.initList();
@@ -54,6 +55,7 @@ public class MyScrollPane extends JBScrollPane {
      * @param preset the preset to add
      */
     public void addPresetToList(Preset preset){
+        presets.add(preset);
         listModel.addElement(preset.getName());
     }
 
@@ -62,6 +64,7 @@ public class MyScrollPane extends JBScrollPane {
      * @param presetName the name of the preset to delete
      */
     public void deletePresetFromList(String presetName){
+        presets.removeIf(preset -> preset.getName().equals(presetName));
         listModel.removeElement(presetName);
     }
 

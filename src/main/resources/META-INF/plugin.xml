@@ -26,25 +26,34 @@
                            displayType="BALLOON"/>
     </extensions>
     <actions>
-        <group class="freeriders.mag.action.ActionGroupGenerate"
+        <group class="freeriders.mag.action.generate.ActionGroupGenerate"
                description="Choose a preset"
                id="freeriders.mag" popup="true"
                text="Generate a Structure">
             <add-to-group anchor="after"
                           group-id="NewGroup" relative-to-action="NewDir" />
         </group>
+        <action id="freeriders.mag.action.export.ExportPresetsAction"
+                class="freeriders.mag.action.export.ExportPresetsAction" text="ExportPresetsAction"
+                description="Export presets as json"/>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService
-                serviceImplementation="freeriders.mag.settings.state.AppSettingsState"/>
+                serviceImplementation="freeriders.mag.settings.ide.state.AppPresetsState"/>
+        <applicationService
+                serviceImplementation="freeriders.mag.settings.project.state.ProjectPresetsState"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="freeriders.mag.settings.project.listener.ProjectManagerOpenedListener"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
                 parentId="tools"
-                instance="freeriders.mag.settings.configurable.AppSettingsConfigurable"
-                id="freeriders.mag.settings.configurable.AppSettingsConfigurable"
+                instance="freeriders.mag.settings.ide.configurable.AppSettingsConfigurable"
+                id="freeriders.mag.settings.ide.configurable.AppSettingsConfigurable"
                 displayName="Modular Architecture Generator"/>
     </extensions>
 </idea-plugin>

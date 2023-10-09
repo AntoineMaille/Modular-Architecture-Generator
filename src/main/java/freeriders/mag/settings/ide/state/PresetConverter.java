@@ -1,8 +1,8 @@
-package freeriders.mag.settings.state;
+package freeriders.mag.settings.ide.state;
 
 import com.google.gson.Gson;
 import com.intellij.util.xmlb.Converter;
-import freeriders.mag.settings.state.models.Preset;
+import freeriders.mag.settings.ide.state.models.Preset;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
