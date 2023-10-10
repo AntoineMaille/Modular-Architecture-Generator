@@ -1,11 +1,9 @@
 package freeriders.mag.settings.ide.configurable;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
 import freeriders.mag.settings.ide.component.AppSettingsComponent;
 import freeriders.mag.settings.ide.state.AppPresetsState;
-import freeriders.mag.settings.ide.state.PresetConverter;
 import freeriders.mag.settings.ide.state.models.FileNode;
 import freeriders.mag.settings.ide.state.models.Preset;
 import org.jetbrains.annotations.Nullable;

@@ -2,13 +2,11 @@ package freeriders.mag.settings.ide.component;
 
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTextArea;
-import com.intellij.ui.table.JBTable;
 import freeriders.mag.action.export.ExportPresetsAction;
 import freeriders.mag.settings.ide.component.components.MyButton;
 import freeriders.mag.settings.ide.component.components.MyGridConstraint;
@@ -17,14 +15,9 @@ import freeriders.mag.settings.ide.state.AppPresetsState;
 import freeriders.mag.settings.ide.state.models.FileNode;
 import freeriders.mag.settings.ide.state.models.Preset;
 import freeriders.mag.ui.create.PresetCreationDialog;
-import freeriders.mag.ui.generate.FolderNameDialog;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,7 +118,7 @@ public class AppSettingsComponent {
             // get project
             PresetCreationDialog dialog = new PresetCreationDialog(null);
             if(dialog.showAndGet()){
-                Preset preset = new Preset(dialog.getName(), FileNode.fromFile(dialog.getTemplateFile()));
+                Preset preset = new Preset(dialog.getName(), FileNode.fromFiles(dialog.getTemplateFile()));
                 appSettingsState.idePresets.add(preset);
                 scrollableList.addPresetToList(preset);
             }

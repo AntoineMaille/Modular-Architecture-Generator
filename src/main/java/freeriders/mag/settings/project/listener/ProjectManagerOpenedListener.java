@@ -1,6 +1,7 @@
 package freeriders.mag.settings.project.listener;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.startup.ProjectActivity;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -12,12 +13,9 @@ import kotlin.coroutines.Continuation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProjectManagerOpenedListener implements ProjectActivity {
 
@@ -25,7 +23,8 @@ public class ProjectManagerOpenedListener implements ProjectActivity {
     private List<Preset> loadProjectPresetsFromJsonFile(Project project) {
         /// Find the mag.json file within the project
         try{
-            return ProjectPresetsUtils.loadPreset(project);
+            VirtualFile magJsonFile = Objects.requireNonNull(ProjectUtil.guessProjectDir(project)).findFileByRelativePath("mag.json");
+            return ProjectPresetsUtils.loadPreset(magJsonFile);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -37,7 +36,7 @@ public class ProjectManagerOpenedListener implements ProjectActivity {
     public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
         // Load project-specific presets from a JSON file
         List<Preset> projectPresets = loadProjectPresetsFromJsonFile(project);
-        VirtualFileManager.getInstance().addVirtualFileListener(new ProjectPresetsFileListener(project));
+        VirtualFileManager.getInstance().addAsyncFileListener(new ProjectPresetsFileListener(project), project);
         // Set projectPresets in ProjectPresetsComponent
         ProjectPresetsState.getInstance().getState().setProjectPresetsState(projectPresets);
         return null;

@@ -1,6 +1,5 @@
 package freeriders.mag.settings.project.utils;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import freeriders.mag.settings.ide.state.models.Preset;
 
@@ -8,14 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectPresetsUtils {
 
 
-    public static List<Preset> loadPreset(Project project) throws IOException {
-
-        VirtualFile magJsonFile = project.getBaseDir().findFileByRelativePath("mag.json");
+    public static List<Preset> loadPreset(VirtualFile magJsonFile) throws IOException {
         if (magJsonFile != null && magJsonFile.exists()) {
 
             // Read and parse the JSON content from the file
@@ -32,7 +30,7 @@ public class ProjectPresetsUtils {
             // Deserialize the JSON content into a list of Preset objects
             return Preset.fromListJson(jsonContent.toString());
         }
-        else throw new IOException("file mag.json does not exists");
+        return new ArrayList<>();
     }
 
 }

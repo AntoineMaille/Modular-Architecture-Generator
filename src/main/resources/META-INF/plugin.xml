@@ -8,12 +8,25 @@
     <name>Modular-Architecture-Generator</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">Freeriders</vendor>
+    <vendor>Antoine Maille</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>The Modular Architecture Generator allows for automatically creating complex folder architecture in one click via pre-defined and custom presets</description>
+    <description><![CDATA[
+        <bold>The Modular Architecture Generator allows for creation of complex folder structures based on custom project or user's presets.</bold>
+
+        <p>The presets can be defined for the IDE globally via the settings page or for a specific project via a configuration file called <bold>mag.json</bold> at the root of any project.</p>
+
+        More specifically you can :
+        <ul>
+            <li>Create user's presets in the settings page</li>
+            <li>Select and Export the user's presets as a json file to place in the project</li>
+        </ul>
+
+        To be even more modular, you can put the &lt;name&gt; placeholder in any folder or directory name in a preset, to be replaced by the feature name you generate.
+    ]]>
+    </description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->

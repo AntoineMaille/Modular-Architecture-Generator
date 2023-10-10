@@ -2,8 +2,10 @@ package freeriders.mag.settings.ide.state.models;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +37,23 @@ public class FileNode {
         return gson.toJson(this);
     }
 
+    public static String toJson(List<FileNode> fileNodes, Boolean prettyPrint) {
+        Gson gson;
+        gson = prettyPrint ? new Gson().newBuilder().setPrettyPrinting().create() : new Gson();
+        return gson.toJson(fileNodes);
+    }
+
     // Custom JSON deserialization
-    public static FileNode fromJson(String json) {
+    public static List<FileNode> fromJson(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, FileNode.class);
+        Type listType = new TypeToken<List<FileNode>>() {}.getType();
+        return gson.fromJson(json,listType);
+    }
+
+    public static List<FileNode> fromFiles(List<File> files) {
+        List<FileNode> fileNodes = new ArrayList<>();
+        files.forEach(file -> fileNodes.add(fromFile(file)));
+        return fileNodes;
     }
 
     /**

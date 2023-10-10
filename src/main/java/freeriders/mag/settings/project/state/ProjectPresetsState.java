@@ -1,9 +1,10 @@
 package freeriders.mag.settings.project.state;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.annotations.OptionTag;
-import freeriders.mag.settings.ide.state.AppPresetsState;
 import freeriders.mag.settings.ide.state.PresetConverter;
 import freeriders.mag.settings.ide.state.models.Preset;
 import org.jetbrains.annotations.NotNull;

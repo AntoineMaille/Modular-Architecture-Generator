@@ -12,9 +12,9 @@ public class Preset {
     String name;
 
     @SerializedName("content")
-    FileNode content;
+    List<FileNode> content;
 
-    public Preset(String name, FileNode content) {
+    public Preset(String name, List<FileNode> content) {
         this.name = name;
         this.content = content;
     }
@@ -27,11 +27,11 @@ public class Preset {
         this.name = name;
     }
 
-    public FileNode getContent() {
+    public List<FileNode> getContent() {
         return content;
     }
 
-    public void setContent(FileNode content) {
+    public void setContent(List<FileNode> content) {
         this.content = content;
     }
 

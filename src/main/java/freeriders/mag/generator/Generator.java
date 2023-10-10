@@ -14,7 +14,9 @@ public class Generator {
      */
     public static void generate(Preset preset, VirtualFile parent, String rootFolderName) throws IOException {
         VirtualFile child = parent.createChildDirectory(parent, rootFolderName);
-        generateHelper(preset.getContent(), child, rootFolderName);
+        for(FileNode node: preset.getContent()){
+            generateHelper(node, child, rootFolderName);
+        }
     }
 
     public static void generateHelper(FileNode fileNode, VirtualFile parent, String featureName) throws IOException {
