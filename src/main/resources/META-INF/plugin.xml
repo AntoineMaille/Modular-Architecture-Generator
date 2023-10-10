@@ -14,9 +14,9 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        <bold>The Modular Architecture Generator allows for creation of complex folder structures based on custom project or user's presets.</bold>
+        <h6>The Modular Architecture Generator allows for creation of complex folder structures based on custom project or user's presets.</h6>
 
-        <p>The presets can be defined for the IDE globally via the settings page or for a specific project via a configuration file called <bold>mag.json</bold> at the root of any project.</p>
+        <p>The presets can be defined for the IDE globally via the settings page or for a specific project via a configuration file called <strong>mag.json</strong> at the root of any project.</p>
 
         More specifically you can :
         <ul>

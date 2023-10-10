@@ -29,27 +29,47 @@ public class FileNode {
         this.children = children;
     }
 
-
-    // Custom JSON serialization
-    public String toJson(Boolean prettyPrint) {
-        Gson gson;
-        gson = prettyPrint ? new Gson().newBuilder().setPrettyPrinting().create() : new Gson();
-        return gson.toJson(this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileNode fileNode = (FileNode) o;
+        return Objects.equals(getName(), fileNode.getName()) && getType() == fileNode.getType() && Objects.equals(getContent(), fileNode.getContent()) && Objects.equals(getChildren(), fileNode.getChildren());
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getType(), getContent(), getChildren());
+    }
+
+    /**
+     * Custom JSON serialization
+     * @param fileNodes The list of FileNodes to serialize
+     * @param prettyPrint Whether to pretty print the JSON or not
+     * @return The JSON string
+     */
     public static String toJson(List<FileNode> fileNodes, Boolean prettyPrint) {
         Gson gson;
         gson = prettyPrint ? new Gson().newBuilder().setPrettyPrinting().create() : new Gson();
         return gson.toJson(fileNodes);
     }
 
-    // Custom JSON deserialization
+    /**
+     * Custom JSON deserialization
+     * @param json The JSON string to deserialize
+     * @return The list of FileNodes
+     */
     public static List<FileNode> fromJson(String json) {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<FileNode>>() {}.getType();
         return gson.fromJson(json,listType);
     }
 
+    /**
+     * Creates a list of FileNodes from a list of files
+     * @param files The list of files to create the FileNodes from
+     * @return The list of FileNodes
+     */
     public static List<FileNode> fromFiles(List<File> files) {
         List<FileNode> fileNodes = new ArrayList<>();
         files.forEach(file -> fileNodes.add(fromFile(file)));

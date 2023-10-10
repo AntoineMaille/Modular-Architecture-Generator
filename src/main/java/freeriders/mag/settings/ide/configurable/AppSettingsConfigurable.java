@@ -48,8 +48,8 @@ public class AppSettingsConfigurable implements Configurable {
 
     @Override
     public void reset() {
-        AppPresetsState settings = AppPresetsState.getInstance();
-        if(!settings.idePresets.isEmpty()) mySettingsComponent.getTextArea().setText(settings.idePresets.get(0).toString());
+        mySettingsComponent.getTextArea().setText("");
+        mySettingsComponent.getList().clearSelection();
     }
 
     @Override

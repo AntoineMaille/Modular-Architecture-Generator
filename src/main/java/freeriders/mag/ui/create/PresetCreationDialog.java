@@ -41,7 +41,10 @@ public class PresetCreationDialog extends DialogWrapper {
         JPanel dialogPanel = new JPanel(new BorderLayout());
         // Set a preferred size for the text field
         textField.setPreferredSize(new Dimension(300, 30)); // Adjust the dimensions as needed
-
+        //add margin to textField
+        dialogPanel.setBorder(BorderFactory.createCompoundBorder(
+                dialogPanel.getBorder(),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         this.setupListener();
 
         dialogPanel.add(textField, BorderLayout.CENTER);

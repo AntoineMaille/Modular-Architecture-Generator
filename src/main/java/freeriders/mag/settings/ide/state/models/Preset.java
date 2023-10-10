@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
 
 public class Preset {
     @SerializedName("name")
@@ -17,6 +18,19 @@ public class Preset {
     public Preset(String name, List<FileNode> content) {
         this.name = name;
         this.content = content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Preset preset = (Preset) o;
+        return Objects.equals(getContent(), preset.getContent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getContent());
     }
 
     public String getName() {
