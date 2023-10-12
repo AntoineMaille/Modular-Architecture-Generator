@@ -1,5 +1,5 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin>
+<idea-plugin require-restart="true">
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>freeriders.mag.Modular-Architecture-Generator</id>
 
@@ -14,7 +14,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        <h2>The Modular Architecture Generator allows for creation of complex folder structures based on custom project or user's presets.</h2>
+        <h1>The Modular Architecture Generator allows for creation of complex folder structures based on custom project or user's presets.</h1>
 
         <p>The presets can be defined for the IDE globally via the settings page or for a specific project via a configuration file called <strong>mag.json</strong> at the root of any project.</p>
 
